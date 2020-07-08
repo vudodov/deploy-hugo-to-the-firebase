@@ -1,0 +1,18 @@
+name: "Deploy Hugo to the Firebase"
+description: "Simple action, builds your static website with HUGO and deploys it to Firebase."
+branding:
+  icon: "share"
+  color: "black"
+inputs:
+    firebase-token:
+      description: "Firebase Token. To get one, run `firebase login:ci` in your local terminal. And save the result to GitHub Secrets"
+      required: true
+    alias:
+      description: "Use it to associate multiple Firebase projects with the same project directory."
+      required: false
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.firebase-token }}
+    - ${{ inputs.alias }}
