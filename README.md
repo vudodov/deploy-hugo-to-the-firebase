@@ -1,5 +1,5 @@
 # Deploy HUGO to the Firebase
-![HUGO-v.0.71.1](https://img.shields.io/badge/HUGO-v0.71.1-blue)
+**HUGO version 0.73.0**
 
 A simple GitHub action that will build your static website with HUGO and deploy it with Firebase.
 
