@@ -1,4 +1,4 @@
-FROM klakegg/hugo:0.73.0-ext-nodejs
+FROM klakegg/hugo:latest
 
 LABEL maintainer="Valerii Udodov (https://valerii-udodov.com)"
 
