@@ -1,12 +1,5 @@
 #!bin/sh -x
 
-# Output versions.
-hugo version
-firebase --version
-
-# Build the Hugo site.
-hugo
-
 # Retrieve the input arguments/parameters.
 FIREBASE_DEPLOY_TOKEN=$1
 ALIAS=${2:-alias}

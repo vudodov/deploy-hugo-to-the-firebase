@@ -1,24 +1,26 @@
-FROM klakegg/hugo:ubuntu
+FROM ubuntu:latest
 
 LABEL maintainer="Valerii Udodov (https://valerii-udodov.com)"
 
-# Installing node
-ENV NODE_VERSION=16.13.0
-RUN apt-get update
-RUN apt-get install -y curl
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-ENV NVM_DIR=${HOME}/.nvm
-RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
-ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
-ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-RUN node --version
-RUN npm --version
+# getting sudo permissions
+RUN apt-get update \
+ && apt-get install -y sudo
 
-# Downloading & Installing Firebase
-RUN npm install -g firebase-tools
+RUN adduser --disabled-password --gecos '' docker
+RUN adduser docker sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-# Start the building & deploying now
-ADD entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["sh", "/entrypoint.sh"]
+USER docker
+
+RUN sudo apt-get update
+
+# Installing hugo and firebase
+RUN sudo apt-get install -y hugo
+RUN sudo apt-get install -y curl
+RUN curl -sL https://firebase.tools | bash
+
+# Build website
+RUN hugo
+
+ADD deploy.sh /deploy.sh
+ENTRYPOINT ["sh", "/deploy.sh"]
