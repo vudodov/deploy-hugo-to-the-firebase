@@ -4,12 +4,12 @@
 FIREBASE_DEPLOY_TOKEN=$1
 ALIAS=${2:-alias}
 
-hugo
+sudo hugo
 
 # Deploy site to Firebase Host
-if [ -z ${ALIAS+x} ]; then firebase use $ALIAS --token $FIREBASE_DEPLOY_TOKEN else echo "ALIAS is not set'"; fi
+if [ -z ${ALIAS+x} ]; then sudo firebase use $ALIAS --token $FIREBASE_DEPLOY_TOKEN else echo "ALIAS is not set'"; fi
 
-firebase deploy -m "
+sudo firebase deploy -m "
   | Successful Deployment |
   Event: $GITHUB_EVENT_NAME,
   Commit SHA: $GITHUB_SHA,
