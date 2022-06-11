@@ -17,8 +17,5 @@ RUN sudo apt-get update
 RUN sudo apt-get install -y hugo curl
 RUN curl -sL https://firebase.tools | bash
 
-# Build website
-RUN hugo
-
 ADD deploy.sh /deploy.sh
 ENTRYPOINT ["sh", "/deploy.sh"]
