@@ -3,6 +3,9 @@ FROM ubuntu:latest
 LABEL maintainer="Valerii Udodov (https://valerii-udodov.com)"
 
 # getting sudo permissions
+RUN apt-get update &&\
+apt-get install -y --no-install-recommends apt-utils sudp
+
 RUN apt-get update \
  && apt-get install -y sudo
 
@@ -15,8 +18,7 @@ USER docker
 RUN sudo apt-get update
 
 # Installing hugo and firebase
-RUN sudo apt-get install -y hugo
-RUN sudo apt-get install -y curl
+RUN sudo apt-get install -y hugo curl
 RUN curl -sL https://firebase.tools | bash
 
 # Build website
