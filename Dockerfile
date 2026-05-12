@@ -2,19 +2,21 @@ FROM ubuntu:latest
 
 LABEL maintainer="Valerii Udodov (https://valerii-udodov.com)"
 
-# Installing utils and sudo
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends apt-utils sudo
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    apt-utils \
+    sudo \
+    adduser \
+    hugo \
+    curl \
+  && rm -rf /var/lib/apt/lists/*
 
-# Permisions
-RUN adduser --disabled-password --gecos '' docker
-RUN adduser docker sudo
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN adduser --disabled-password --gecos '' docker \
+  && adduser docker sudo \
+  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
 USER docker
 
-# Installing hugo and firebase
-RUN sudo apt-get update
-RUN sudo apt-get install -y hugo curl
 RUN curl -sL https://firebase.tools | bash
 
 ADD deploy.sh /deploy.sh
